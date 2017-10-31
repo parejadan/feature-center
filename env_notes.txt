@@ -1,0 +1,36 @@
+# notes for win10 + wsl environment setup
+
+# Activate Python Env
+> source env/bin/activate
+
+
+# Env Configurations
+> export APP_SETTINGS='config.DevelopmentConfig'
+
+# Python Dependencies
+> requirements.txt
+
+# Postgres login
+> sudo su postgres
+> a1s2r3j4f5k6
+\q -- quit
+\list -- show databases
+\du -- list all users
+\connect -- show who you're connected with
+ALTER ROLE parejadan CREATEDB;
+
+# restart postgres service
+> sudo service postgresql restart
+
+
+# postgres super user
+sudo su postgres
+psql
+
+
+# show postgres config file and enable localhost connection via phadmin
+SHOW config_file;
+# edit config file to allow localhost by uncommenting out listen_address="*"
+
+sudo /usr/sbin/sshd -d # run open ssh in foreground
+# use pgadmin4 to monitor wsl postgres server from windows UI
