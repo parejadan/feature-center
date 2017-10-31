@@ -1,0 +1,10 @@
+{
+    "user":"parejadan",
+    "password":"a1s2r3j4f5k6",
+    "host":"localhost",
+    "port":5432,
+    "db":"feature_center",
+    "SQLALCHEMY_TRACK_MODIFICATIONS":false,
+    "SQLALCHEMY_DATABASE_URI": "postgresql://{}:{}@{}:{}/{}",
+    "SETUP_DATABASE":false
+}
