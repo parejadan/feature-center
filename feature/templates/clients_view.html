@@ -1,0 +1,35 @@
+<table class="table table-bordered pagin-table">
+    <thead>
+        <tr>
+            <th>Client Name</th>
+            <th>Email Address</th>
+            <th>Phone Number</th>
+            <th>Requested Features Cnt.</th>
+            <th>Product Cnt.</th>
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: client_list">
+        <tr>
+            <td data-bind="if: name">
+                <span data-bind="text: name"></span>
+            </td>
+
+            <td data-bind="if: email_address">
+                <span data-bind="text: email_address"></span>
+            </td>
+
+            <td data-bind="if: phone_number">
+                <span data-bind="text: phone_number"></span>
+            </td>
+
+            <td data-bind="if: request_cnt">
+                <span data-bind="text: request_cnt"></span>
+            </td>
+
+            <td data-bind="if: product_cnt">
+                <span data-bind="text: product_cnt"></span>
+            </td>
+
+        </tr>
+    </tbody>
+</table>

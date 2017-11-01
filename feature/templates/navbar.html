@@ -1,11 +1,17 @@
-<nav class="nav nav-pills">
+<ul class="nav nav-pills">
     <li role="presentation" class="active">
-        <a href="#">Home</a>
+        <a href="#home">Home</a>
     </li>
     <li role="presentation">
-        <a href="#">Clients</a>
+        <a href="#client_add" data-bind="click: client_add">Add Client</a>
     </li>
     <li role="presentation">
-        <a href="#">Reports</a>
+        <a href="#client_info" data-bind="click: client_info">Clients Info</a>
     </li>
-</nav>
+    <li role="presentation">
+        <a href="#client_update" data-bind="click: client_update">Update Client</a>
+    </li>
+    <li role="presentation">
+        <a href="#clients_view" data-bind="click: client_view">Clients</a>
+    </li>
+</ul>
