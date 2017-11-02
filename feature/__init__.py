@@ -1,7 +1,11 @@
 import json
 from flask import Flask, render_template
 from feature.model import db, Client, ClientFeatureRequest
-from feature.api.v1.clients import client_api
+
+from v1.clients import client_api
+from v1.features import feature_api
+# from feature.api.v1.clients import client_api
+# from feature.api.v1.clients import feature_api
 
 
 class ConfigManager:
@@ -53,3 +57,4 @@ def index():
 
 
 app.register_blueprint(client_api, url_prefix='api/v1/clients')
+app.register_blueprint(feature_api, url_prefix='api/v1/features')

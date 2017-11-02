@@ -2,7 +2,7 @@ Backend TODO
 ----
 - [ ] service call for submitting new feature requests
 - [x] service call for pulling clients
-- [ ] service call for pulling existing features
+- [x] service call for pulling existing features
 - [ ] service call for pulling existing products
 - [ ] service call for pulling priority list
 - [x] add db.model for feature priority 
