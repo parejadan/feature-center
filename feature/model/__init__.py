@@ -79,6 +79,7 @@ class ClientFeatureRequest(db.Model):
     # delete feature info if client or request ever get removed
     features = db.relationship('FeatureInfo', cascade='all, delete-orphan',
                                backref='ClientFeatureRequest', lazy='dynamic')
+
     def to_dict(self):
         serialized = {
             'client_id': self.client_id,

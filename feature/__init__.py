@@ -2,10 +2,10 @@ import json
 from flask import Flask, render_template
 from feature.model import db, Client, ClientFeatureRequest
 
-from v1.clients import client_api
-from v1.features import feature_api
-# from feature.api.v1.clients import client_api
-# from feature.api.v1.clients import feature_api
+# from v1.clients import client_api
+# from v1.features import feature_api
+from feature.api.v1.clients import client_api
+from feature.api.v1.features import feature_api
 
 
 class ConfigManager:
