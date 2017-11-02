@@ -1,17 +1,18 @@
-<ul class="nav nav-pills">
-    <li role="presentation" class="active">
-        <a href="#home">Home</a>
-    </li>
-    <li role="presentation">
-        <a href="#client_add" data-bind="click: client_add">Add Client</a>
-    </li>
-    <li role="presentation">
-        <a href="#client_info" data-bind="click: client_info">Clients Info</a>
-    </li>
-    <li role="presentation">
-        <a href="#client_update" data-bind="click: client_update">Update Client</a>
-    </li>
-    <li role="presentation">
-        <a href="#clients_view" data-bind="click: client_view">Clients</a>
-    </li>
-</ul>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#dashboard" aria-expanded="false" aria-controls="navbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Feature Center</a>
+    </div>
+    <div id="dashboard" class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            <li class="active"> <a href="#clients" data-bind="click: clients">Clients</a> </li>
+            <li> <a href="#features" data-bind="click: features">Features</a> </li>
+            <li> <a href="#feature_add" data-bind="click: feature_add">Submit Feature Request</a></li>
+            <li> <a href="#reports" data-bind="click: reports" >Reports</a> </li>
+        </ul>
+    </div>
+</nav>

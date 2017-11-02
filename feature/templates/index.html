@@ -6,19 +6,19 @@
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <span data-bind="template: 'navbar'"></span>
+    <span class="container" data-bind="template: navbar"></span>
 
-    <div id="presenter" class="container" data-bind="template: 'presenter'"></div>
+    <div id="presenter" class="container jumbotron" data-bind="template: presenter"></div>
 
-	<template id="navbar">{% include 'navbar.html' %}</template>
-    <template id="client_add">{% include 'client_add.html' %}</template>
-    <template id="client_info">{% include 'client_info.html' %}</template>
-    <template id="client_update">{% include 'client_update.html' %}</template>
-    <template id="clients_view">{%include 'clients_view.html' %}</template>
+	<template id="#navbar">{% include 'navbar.html' %}</template>
+    <template id="#clients">{% include 'clients.html' %}</template>
+    <template id="#features">{% include 'features.html' %}</template>
+    <template id="#feature_add">{% include 'feature_add.html' %}</template>
+    <template id="#reports">{% include 'reports.html' %}</template>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="/static/js/vm_feature-center.js"></script>
+    <script src="/static/js/vm_client.js"></script>
 </body>
 </html>
