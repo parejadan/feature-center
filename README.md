@@ -1,0 +1,13 @@
+TODO
+----
+- service call for submitting new feature requests
+- service call for pulling clients
+- service call for pulling existing features
+- UI form validation for adding feature
+- service call for pulling existing products
+- service call for pulling priority list
+-- add db.model for feature priority 
+- load model test data from csv files
+- database build up and tear down checks
+- UI dynamic feature priority update (drag drop UI)
+-- database update priority list
