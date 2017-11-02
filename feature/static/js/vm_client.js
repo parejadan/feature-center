@@ -17,7 +17,8 @@ function clientView(view) {
     }
 
     view.clients = function() { 
-        anchor(view, mapping.clients) 
+        anchor(view, mapping.clients)
+
     }
     view.features = function() { 
         anchor(view, mapping.features) 
