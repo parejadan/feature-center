@@ -56,5 +56,7 @@ def index():
     return render_template('index.html')
 
 
-app.register_blueprint(client_api, url_prefix='api/v1/clients')
-app.register_blueprint(feature_api, url_prefix='api/v1/features')
+app.register_blueprint(client_api, url_prefix='/api/v1/clients')
+app.register_blueprint(feature_api, url_prefix='/api/v1/features')
+app.register_blueprint(feature_api, url_prefix='/api/v1/priorities')
+app.register_blueprint(feature_api, url_prefix='/api/v1/products')
