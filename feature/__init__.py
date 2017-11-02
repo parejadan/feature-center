@@ -6,6 +6,8 @@ from feature.model import db, Client, ClientFeatureRequest
 # from v1.features import feature_api
 from feature.api.v1.clients import client_api
 from feature.api.v1.features import feature_api
+from feature.api.v1.priorities import priority_api
+from feature.api.v1.products import product_api
 
 
 class ConfigManager:
@@ -58,5 +60,5 @@ def index():
 
 app.register_blueprint(client_api, url_prefix='/api/v1/clients')
 app.register_blueprint(feature_api, url_prefix='/api/v1/features')
-app.register_blueprint(feature_api, url_prefix='/api/v1/priorities')
-app.register_blueprint(feature_api, url_prefix='/api/v1/products')
+app.register_blueprint(priority_api, url_prefix='/api/v1/priorities')
+app.register_blueprint(product_api, url_prefix='/api/v1/products')
