@@ -11,7 +11,7 @@ from feature.api.v1.products import product_api
 
 app, env_config = Flask(__name__), ConfigManager()
 env_config.apply_config(app)  # load configuration settings from json file
-env_config.app_run(app)
+env_config.init_db(app)
 
 
 @app.route('/')

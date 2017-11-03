@@ -33,12 +33,5 @@ class ConfigManager:
         _app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = self._track_modifications
 
     @staticmethod
-    def setup_database(_app):
-        with _app.app.context():
-            db.create_all()
-
-    def app_run(self, _app):
+    def init_db(_app):
         db.init_app(_app)
-        # build database if environment config has it set
-        if self.setup_database:
-            self.setup_database(_app)

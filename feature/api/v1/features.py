@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from feature.model import FeatureInfo, ClientFeatureRequest
+from feature.model import FeatureInfo
 from feature.model.qbridge import basic_select
 
 
