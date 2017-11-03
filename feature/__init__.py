@@ -1,8 +1,6 @@
 from flask import Flask, render_template
 from feature.config import ConfigManager
 
-# from v1.clients import client_api
-# from v1.features import feature_api
 from feature.api.v1.clients import client_api
 from feature.api.v1.features import feature_api
 from feature.api.v1.priorities import priority_api

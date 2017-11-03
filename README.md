@@ -6,8 +6,8 @@ Backend TODO
 - [x] service call for pulling existing products
 - [x] service call for pulling priority list
 - [x] add db.model for feature priority 
-- [ ] load model test data from csv files
-- [ ] database build up and tear down checks
+- [x] load model test data from csv files
+- [x] database build up and tear down checks
 - [ ] revise code documentation and exception handling
 - [ ] add logging
 - [ ] add unit tests

@@ -80,36 +80,14 @@ function model(view) {
 
 //view objects
 var clientViewModel = function() {
-    this.client_list = ko.observable([
-        {name: "Joe Comp", email: "joe@comp.com",
-         phone_number: "912-345-9213", request_cnt: '3', product_id: '3'},
-        {name: "Joe Comp", email: "joe@comp.com",
-         phone_number: "912-345-9213", request_cnt: '3', product_id: '3'},
-        {name: "Joe Comp", email: "joe@comp.com",
-         phone_number: "912-345-9213", request_cnt: '3', product_id: '3'},
-        ])
-    this.product_list = [
-        {id: "1", name: "Sales Analysis"},
-        {id: "2", name: "Payroll"},
-        {id: "3:", name: "Revaniew Analysis"},
-        ]
-    this.priority_list = [
-        {id: "1", name: "1"},
-        {id: "2", name: "2"},
-        {id: "3", name: "3"},
-        {id: "4", name: "4"},
-        {id: "5", name: "5"},
-        {id: "6", name: "6"},
-        {id: "7", name: "7"},
-        ]
     this.presenter = ko.observable()
-    /*this.client_list = ko.observableArray([])
+    this.client_list = ko.observableArray([])
     this.feature_list = ko.observableArray([])
     this.priority_list = ko.observableArray([])
-    this.product_list = ko.observableArray([])*/
+    this.product_list = ko.observableArray([])
 
     viewModel(this) //apply routings
-    //model(this) //apply model
+    model(this) //apply model
 }
 
 ko.applyBindings(clientViewModel)
