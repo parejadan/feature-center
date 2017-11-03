@@ -35,8 +35,8 @@ with app.app_context():
     for tok in client_data:
         nam, mail, phnum, prodcode = tok.split(',')
         rec = Client(name=nam, email=mail, phone_number=phnum)
-        product = ProductTypes(product_code=prodcode)
-        rec.product_relation.append(product)
+        # product = ProductTypes(product_code=prodcode)
+        # rec.product_relation.append(product)
         db.session.add(rec)
     # commit data to database
     db.session.commit()

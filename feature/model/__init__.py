@@ -8,8 +8,6 @@ class ProductTypes(db.Model):  # existing product types
     __tablename__ = 'product_type'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     product_code = db.Column(db.String(50), nullable=False)
-    client_relation = db.relationship('Client', 
-                                      backref=db.backref('product_type', lazy=True))
 
     def to_dict(self):
         serialized = {
@@ -39,6 +37,11 @@ clientFeatureRequest = db.Table('client_feature_request',
                                 db.Column('date_created', db.DateTime, default=db.func.current_timestamp())
                                 )
 
+clientProduct = db.Table('client_product',
+                         db.Column('client_id', db.Integer, db.ForeignKey('client.id'), primary_key=True),
+                         db.Column('product_id', db.Integer, db.ForeignKey('product_type.id'), primary_key=True),
+                         db.Column('date_created', db.DateTime, default=db.func.current_timestamp()))
+
 
 class Client(db.Model):
     __tablename__ = 'client'
@@ -46,7 +49,8 @@ class Client(db.Model):
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=True)
     phone_number = db.Column(db.String(25), nullable=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('product_type.id'), nullable=True),
+    product_relation = db.relationship('ProductTypes', secondary=clientProduct, 
+                                       backref=db.backref('client', lazy=True))
     # reference to the ORM not the table name
     request_relation = db.relationship('FeatureInfo', secondary=clientFeatureRequest,
                                        backref=db.backref('client', lazy=True))
