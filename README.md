@@ -6,7 +6,7 @@ Backend (& UI model) TODO
 - [x] service & call for pulling clients
 - [x] service & call for pulling existing features
 - [x] service & call for pulling existing products
-- [ ] service call for pulling priority list for a given client
+- [x] service call for pulling priority list for a given client
 - [x] load model test data from csv files
 - [x] database build up and tear down checks
 - [ ] revise code documentation and exception handling
@@ -15,7 +15,7 @@ Backend (& UI model) TODO
 
 UI TODO
 -------
-- [ ] disable all fields until a client is selected in adding feature
+- [x] disable feature submission until a client is selected in adding feature
 - [ ] once a client is selected show to the right existing client features request
 - [ ] allow features to be dragged and dropped for ranking priority (priority ID gets updated in UI)
 - [ ] lock adding feature form if user is updating priority - unlock after update is complete
