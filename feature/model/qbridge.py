@@ -1,4 +1,5 @@
 import json
+from feature.model import db
 
 
 def basic_select(table, id=None):
@@ -8,6 +9,15 @@ def basic_select(table, id=None):
     else:
         query = table.query.get(id)
         return to_json_dump(query)
+
+
+def basic_insert(trans):
+    try:
+        db.session.add(trans)
+        db.session.commit()
+    except Exception as ex:
+        # todo better logging
+        print('trouble inserting new feature', ex)
 
 
 def to_json_dump(obj, seprtrs=(',', ':')):

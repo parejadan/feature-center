@@ -1,4 +1,4 @@
-Client A,A@client.com,(123)-234-3123,Billing
-Client B,B@client.com,(123)-234-3124,Claims
-Client C,C@client.com,(123)-234-3125,Reports
-Client D,D@client.com,(123)-000-3124,Claims
+Client A,A@client.com,(123)-234-3123,1
+Client B,B@client.com,(123)-234-3124,2
+Client C,C@client.com,(123)-234-3125,3
+Client D,D@client.com,(123)-000-3124,1

@@ -36,13 +36,20 @@ function viewModel(view) {
 // service mediator
 function model(view) {
     base_url = "/api/v1/"
-    function post(url, payload) {
-        $.post(url, payload)
-            .done(function() {
-                console.log("success" + url)
-            }).fail(function(data) {
-                console.log("failure with url" + url)
-            })
+    function post(url_path, payload) {
+        $.ajax({
+            type: "POST",
+            url: url_path,
+            data: JSON.stringify(payload),
+            success: function(data) {
+                console.log("success" + url_path)
+                return true
+            },
+            error: function(data) {
+                console.log("failure with url" + url_path)
+                return false
+            }
+        })
     }
 
     function get(url, observer) {
@@ -60,14 +67,21 @@ function model(view) {
     view.feature_create = function() {
         $("#feature_create").prop("disabled", true)
         payload = {
-            title: $("#title").val(),
-            description: $("#description").val(),
-            client_id: $("#client_id").val(),
-            product_id: $("#product_id").val(),
-            date_target: $("#date_target").val(),
-            priority_id: $("#priority_id").val()
+            "info": {
+                title: $("#title").val(),
+                description: $("#description").val(),
+                date_target: $("#date_target").val() },
+            "priority": {
+                id: $("#priority_id").val() },
+            "client": {
+                id: $("#client_id").val() },
+            "product": {
+                id: $("#client_id").val() },
         }
-        post(base_url + "features/create", payload)
+        if (post(base_url + "features/create", payload)) {
+            $("#feature_add_form").reset() // allow user to easily insert new data
+        }
+        //$("#feature_create").prop("disabled", false)
     }
 
     //load all data

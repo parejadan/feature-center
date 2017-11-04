@@ -5,9 +5,11 @@ db = SQLAlchemy()
 
 
 class ProductTypes(db.Model):  # existing product types
-    __tablename__ = 'product_type'
+    __tablename__ = 'product_types'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     product_code = db.Column(db.String(50), nullable=False)
+    client_relation = db.relationship('Client', cascade='all, delete-orphan',
+                                      backref='ProductTypes', lazy=True)
 
     def to_dict(self):
         serialized = {
@@ -17,43 +19,15 @@ class ProductTypes(db.Model):  # existing product types
         return serialized
 
 
-class PriorityTypes(db.Model):
-    __tablename__ = 'priority_types'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    priority_name = db.Column(db.String(15), nullable=False)
-
-    def to_dict(self):
-        serialized = {
-            'id': self.id,
-            'priority_name': self.priority_name,
-        }
-        return serialized
-
-
-clientFeatureRequest = db.Table('client_feature_request',
-                                db.Column('feature_id', db.Integer, db.ForeignKey('feature_info.id'), primary_key=True),
-                                db.Column('priority_id', db.Integer, db.ForeignKey('priority_types.id'), primary_key=True),
-                                db.Column('client_id', db.Integer, db.ForeignKey('client.id'), primary_key=True),
-                                db.Column('date_created', db.DateTime, default=db.func.current_timestamp())
-                                )
-
-clientProduct = db.Table('client_product',
-                         db.Column('client_id', db.Integer, db.ForeignKey('client.id'), primary_key=True),
-                         db.Column('product_id', db.Integer, db.ForeignKey('product_type.id'), primary_key=True),
-                         db.Column('date_created', db.DateTime, default=db.func.current_timestamp()))
-
-
 class Client(db.Model):
     __tablename__ = 'client'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=True)
     phone_number = db.Column(db.String(25), nullable=True)
-    product_relation = db.relationship('ProductTypes', secondary=clientProduct, 
-                                       backref=db.backref('client', lazy=True))
-    # reference to the ORM not the table name
-    request_relation = db.relationship('FeatureInfo', secondary=clientFeatureRequest,
-                                       backref=db.backref('client', lazy=True))
+    product_id = db.Column(db.Integer, db.ForeignKey('product_types.id'), nullable=False)
+    request_relation = db.relationship('ClientFeatureRequest', cascade='all, delete-orphan',
+                                       backref='Client', lazy=True)
 
     def to_dict(self):
         serialized = {
@@ -67,24 +41,27 @@ class Client(db.Model):
         return serialized
 
 
-class FeatureInfo(db.Model):
-    __tablename__ = 'feature_info'
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+class ClientFeatureRequest(db.Model):
+    __tablename__ = 'client_feature_request'
+    id = db.Column(db.Integer, unique=True, autoincrement=True)  # we only care that it's unique
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text, nullable=False)
+    # what really matters is that for each feature request a client has, it's priority is unique per product
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product_types.id'), primary_key=True)
+    priority_id = db.Column(db.Integer, primary_key=True)
     date_target = db.Column(db.DateTime, nullable=True)  # target date might not be finalized
-    priority_relation = db.relationship('PriorityTypes', secondary=clientFeatureRequest,
-                                        backref=db.backref('feature_info', lazy=True))
-    client_relation = db.relationship('Client', secondary=clientFeatureRequest,
-                                      backref=db.backref('feature_info', lazy=True))
+    date_created = db.Column(db.DateTime, default=db.func.current_timestamp())  # keep track client request vs target
 
     def to_dict(self):
         serialized = {
             'id': self.id,
             'title': self.title,
             'description': self.description,
+            'client_id': self.client_id,
+            'product_id': self.product_id,
+            'priority_id': self.priority_id,
             'date_target': self.date_target,
-            'priority_relation': self.priority_relation,
-            'client_relation': self.client_relation
+            'date_created': self.date_target
         }
         return serialized
