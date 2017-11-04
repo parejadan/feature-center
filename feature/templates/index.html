@@ -18,10 +18,9 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"> 
-                     <a href="#clients" data-bind="click: clients">Clients</a> </li>
-                <li> <a href="#features" data-bind="click: features">Features</a> </li>
-                <li> <a href="#feature_add" data-bind="click: feature_add">Submit Feature Request</a></li>
+                <li class="active">
+                    <a href="#feature_add" data-bind="click: feature_add">Submit Feature Request</a></li>
+                <li> <a href="#features" data-bind="click: features">Requested Features</a> </li>
                 <li> <a href="#reports" data-bind="click: reports" >Reports</a> </li>
             </ul>
         </div>
@@ -30,9 +29,8 @@
 
     <div id="presenter" class="container jumbotron" data-bind="template: presenter"></div>
 
-    <template id="#clients">{% include 'clients.html' %}</template>
-    <template id="#featurexs">{% include 'features.html' %}</template>
     <template id="#feature_add">{% include 'feature_add.html' %}</template>
+    <template id="#features">{% include 'features.html' %}</template>
     <template id="#reports">{% include 'reports.html' %}</template>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

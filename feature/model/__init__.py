@@ -36,7 +36,7 @@ class Client(db.Model):
             'email': self.email,
             'phone_number': self.phone_number,
             'product_id': self.product_id,
-            'request_relation': self.request_relation
+            # 'request_relation': self.request_relation
         }
         return serialized
 
@@ -48,7 +48,7 @@ class ClientFeatureRequest(db.Model):
     description = db.Column(db.Text, nullable=False)
     # what really matters is that for each feature request a client has, it's priority is unique per product
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'), primary_key=True)
-    product_id = db.Column(db.Integer, db.ForeignKey('product_types.id'), primary_key=True)
+    product_id = db.Column(db.Integer, db.ForeignKey('product_types.id'))  # read requirements closer, primary_key=True)
     priority_id = db.Column(db.Integer, primary_key=True)
     date_target = db.Column(db.DateTime, nullable=True)  # target date might not be finalized
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())  # keep track client request vs target
@@ -61,7 +61,7 @@ class ClientFeatureRequest(db.Model):
             'client_id': self.client_id,
             'product_id': self.product_id,
             'priority_id': self.priority_id,
-            'date_target': self.date_target,
-            'date_created': self.date_target
+            'date_target': self.date_target.strftime("%Y-%m-%d %H:%M:%S"),
+            'date_created': self.date_target.strftime("%Y-%m-%d %H:%M:%S")
         }
         return serialized

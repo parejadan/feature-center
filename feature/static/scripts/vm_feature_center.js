@@ -1,38 +1,3 @@
-// view routers
-function viewModel(view) {
-    var mapping = { //possible routings for view
-        clients: "#clients",
-        features: "#features",
-        feature_add: "#feature_add",
-        reports: "#reports",
-    }
-
-    function anchor(vm, anc) {
-        // update url anchor
-        if (window.location.hash != anc) {
-            window.location.hash = anc
-        }
-        vm.presenter(anc) //actually anchor to view
-    }
-
-    view.clients = function() { 
-        anchor(view, mapping.clients)
-
-    }
-    view.features = function() { 
-        anchor(view, mapping.features) 
-    }
-    view.feature_add = function() { 
-        anchor(view, mapping.feature_add) 
-    }
-    view.reports = function() { 
-        anchor(view, mapping.reports) 
-    }
-
-    //init presenter and define routings
-    anchor(view, mapping.clients)
-}
-
 // service mediator
 function model(view) {
     base_url = "/api/v1/"
@@ -64,32 +29,66 @@ function model(view) {
             })
     }
 
-    view.feature_create = function() {
-        $("#feature_create").prop("disabled", true)
-        payload = {
-            "info": {
-                title: $("#title").val(),
-                description: $("#description").val(),
-                date_target: $("#date_target").val() },
-            "priority": {
-                id: $("#priority_id").val() },
-            "client": {
-                id: $("#client_id").val() },
-            "product": {
-                id: $("#client_id").val() },
-        }
-        if (post(base_url + "features/create", payload)) {
-            $("#feature_add_form").reset() // allow user to easily insert new data
-        }
-        //$("#feature_create").prop("disabled", false)
+    function get_client_features(client_id, priority_list, client_requests) {
+        $.ajax({
+            type: "GET",
+            url: base_url + "features/getClientRequests/" + client_id,
+            data: "",
+            async: false,
+            success: function(data) {
+                data = JSON.parse(data)
+                //todo add parallel the following lines
+                data.available_requests.forEach(function(itm) { priority_list.push(itm)} )
+                data.existing_requests.forEach(function(itm) { client_requests.push(itm)} )
+                data.existing_requests
+                return data
+            },
+            error: function(data) {
+                console.log("failure" + url)
+                return data
+            }
+        })
     }
 
-    //load all data
-    //todo add lazy loading and parallel calls for everything below
-    get(base_url + "clients", view.client_list)
-    get(base_url + "features", view.feature_list)
-    get(base_url + "priorities", view.priority_list)
-    get(base_url + "products", view.product_list)
+    view.sync_client_requests = function() {
+        client_feature_relations = {}
+        get_client_features($("#client_id").val(), view.priority_list, view.client_requests)
+        $("#feature_create").prop("disabled", false)
+    }
+
+        get(base_url + "clients", view.client_list)
+        get(base_url + "products", view.product_list)
+        get(base_url + "features", view.feature_list)
+}
+
+// view routers
+function viewModel(view) {
+    var mapping = { //possible routings for view
+        feature_add: "#feature_add",
+        features: "#features",
+        reports: "#reports",
+    }
+
+    function anchor(vm, anc) {
+        // update url anchor
+        if (window.location.hash != anc) {
+            window.location.hash = anc
+        }
+        vm.presenter(anc) //actually anchor to view
+    }
+
+    view.feature_add = function() {
+        anchor(view, mapping.feature_add)
+    }
+    view.features = function() {
+        anchor(view, mapping.features) 
+    }
+    view.reports = function() { 
+        anchor(view, mapping.reports) 
+    }
+
+    //init presenter and define routings
+    anchor(view, mapping.feature_add)
 }
 
 //view objects
@@ -99,9 +98,10 @@ var clientViewModel = function() {
     this.feature_list = ko.observableArray([])
     this.priority_list = ko.observableArray([])
     this.product_list = ko.observableArray([])
+    this.client_requests = ko.observableArray([])
 
-    viewModel(this) //apply routings
     model(this) //apply model
+    viewModel(this) //apply routings
 }
 
 ko.applyBindings(clientViewModel)

@@ -1,6 +1,6 @@
 from flask import Blueprint
 from feature.model import ProductTypes
-from feature.model.qbridge import basic_select
+from feature.model.logic import basic_select
 
 product_api = Blueprint('products', __name__, template_folder='templates')
 

@@ -20,16 +20,23 @@ def basic_insert(trans):
         print('trouble inserting new feature', ex)
 
 
-def to_json_dump(obj, seprtrs=(',', ':')):
+def to_dict(obj):
+    obj_len = len(obj)
+    if obj_len > 1:
+        return [o.to_dict() for o in obj]
+    elif obj_len == 1:
+        return [obj[0].to_dict()]
+    else:
+        return []
+
+
+def to_json_dump(obj, cast=True, seprtrs=(',', ':')):
     try:
-        obj_len = len(obj)
-        if obj_len > 1:
-            dict_list = [o.to_dict() for o in obj]
-            return json.dumps(dict_list, separators=seprtrs)
-        elif obj_len == 1:
-            return json.dumps(obj.to_dict(), separators=seprtrs)
+        if cast:
+            payload = to_dict(obj)
         else:
-            return json.dumps([], separators=seprtrs)
+            payload = obj
+        return json.dumps(payload, separators=seprtrs)
     except Exception as ex:
         # todo improve logging
         print('something happened', ex)
