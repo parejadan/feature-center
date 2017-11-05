@@ -4,7 +4,7 @@ from feature.model.logic import to_dict, to_json_dump, basic_insert
 
 
 feature_api = Blueprint('features', __name__, template_folder='templates')
-PRIORITY_REQUEST_LIMIT = 10
+PRIORITY_REQUEST_LIMIT = 5
 _priority_list = [p+1 for p in range(PRIORITY_REQUEST_LIMIT)]
 
 
@@ -39,7 +39,10 @@ def create():
     try:
         payload = request.get_json(force=True)
         request_feature = ClientFeatureRequest(**payload)
-        basic_insert(request_feature)
-
+        if basic_insert(request_feature):
+            return 200
+        else:
+            return 500
     except Exception as ex:
         print('something happened creating feature relation', ex)
+        return 500

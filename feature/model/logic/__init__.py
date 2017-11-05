@@ -15,9 +15,11 @@ def basic_insert(trans):
     try:
         db.session.add(trans)
         db.session.commit()
+        return True
     except Exception as ex:
         # todo better logging
         print('trouble inserting new feature', ex)
+        return False
 
 
 def to_dict(obj):

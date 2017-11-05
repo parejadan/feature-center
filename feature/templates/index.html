@@ -3,28 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="/static/styles/main.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
 </head>
 <body>
     <!-- navigation bar begin-->
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="/">Feature Center</a>
-        </div>
-        <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a href="#feature_add" data-bind="click: feature_add">Submit Feature Request</a></li>
-                <li> <a href="#features" data-bind="click: features">Requested Features</a> </li>
-                <li> <a href="#reports" data-bind="click: reports" >Reports</a> </li>
+    <header class="navbar navbar-expand navbar-dark flex-column flex-md-row bd-navbar" style="background-color: #563d7c">
+        <a class="navbar-brand mr-0 mr-md-2" href="/">Feature Center</a>
+        <div class="navbar-nav-scroll">
+            <ul class="navbar-nav bd-navbar-nav flex-row">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#feature_add" data-bind="click: feature_add">Submit Feature Request</a></li>
+                <li class="nav-item"> <a class="nav-link" href="#features" data-bind="click: features">Requested Features</a> </li>
+                <li class="nav-item"> <a class="nav-link" href="#reports" data-bind="click: reports" >Reports</a> </li>
             </ul>
         </div>
-    </nav>
+    </header>
     <!--navigation bar end-->
 
     <div id="presenter" class="container jumbotron" data-bind="template: presenter"></div>
@@ -35,7 +30,8 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
     <script src="/static/scripts/vm_feature_center.js"></script>
 </body>
 </html>

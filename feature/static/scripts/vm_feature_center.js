@@ -5,14 +5,13 @@ function model(view) {
         $.ajax({
             type: "POST",
             url: url_path,
+            async: false,
             data: JSON.stringify(payload),
             success: function(data) {
                 console.log("success" + url_path)
-                return true
             },
             error: function(data) {
                 console.log("failure with url" + url_path)
-                return false
             }
         })
     }
@@ -47,11 +46,26 @@ function model(view) {
         })
     }
 
+    view.feature_create = function() {
+        view.disable_feature_add_button(true)
+        payload = {
+            "title": $("#title").val(),
+            "description": $("#description").val(),
+            "client_id": $("#client_id").val(),
+            "product_id": $("#product_id").val(),
+            "priority_id": $("#priority_id").val(),
+            "date_target": $("#date_target").val(),
+        }
+        post(base_url + "features/create", payload, view.reset_feature_add_form)
+        view.sync_client_requests()
+        view.reset_feature_add_form()
+    }
+
     view.sync_client_requests = function() {
         view.priority_list([])
         view.client_requests([])
         get_client_features($("#client_id").val(), view.priority_list, view.client_requests)
-        $("#feature_create").prop("disabled", false)
+        view.disable_feature_add_button(false)
     }
 
     get(base_url + "clients", view.client_list)
@@ -73,6 +87,16 @@ function viewModel(view) {
             window.location.hash = anc
         }
         vm.presenter(anc) //actually anchor to view
+    }
+
+    view.disable_feature_add_button = function(disable_btn) {
+        $("#feature_create").prop("disabled", disable_btn)
+    }
+
+    view.reset_feature_add_form = function() {
+        $("#feature_add_form").reset() // allow user to easily insert new data
+        view.client_requests.push(payload)
+        view.disable_feature_add_button(false)
     }
 
     view.feature_add = function() {
@@ -98,8 +122,8 @@ var clientViewModel = function() {
     this.product_list = ko.observableArray([])
     this.client_requests = ko.observableArray([])
 
-    model(this) //apply model
     viewModel(this) //apply routings
+    model(this) //apply model
 }
 
 ko.applyBindings(clientViewModel)

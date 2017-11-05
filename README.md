@@ -16,7 +16,7 @@ Backend (& UI model) TODO
 UI TODO
 -------
 - [x] disable feature submission until a client is selected in adding feature
-- [ ] once a client is selected show to the right existing client features request
+- [x] once a client is selected show existing client features request
 - [ ] allow features to be dragged and dropped for ranking priority (priority ID gets updated in UI)
 - [ ] lock adding feature form if user is updating priority - unlock after update is complete
 - [ ] add form validations for adding feature (date min 3 months in the future), title, and description need to be entered
