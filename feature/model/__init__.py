@@ -60,8 +60,7 @@ class ClientFeatureRequest(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text, nullable=False)
-    # what really matters is that for each feature request a client has, it's priority is unique per product
-    client_id = db.Column(db.Integer, db.ForeignKey('client.id'), primary_key=True)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id'))
     product_id = db.Column(db.Integer, db.ForeignKey('product_types.id'))  # read requirements closer, primary_key=True)
     priority_id = db.Column(db.Integer)
     date_target = db.Column(db.DateTime, nullable=True)  # target date might not be finalized

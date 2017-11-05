@@ -1,6 +1,6 @@
 from flask import Blueprint, request, Response
 from feature.model import ClientFeatureRequest
-from feature.model.logic import to_dict, to_json_dump, basic_insert, update_features_request
+from feature.model.logic import to_dict, to_json_dump, basic_insert, update_features_request, delete_feature_request
 
 
 feature_api = Blueprint('features', __name__, template_folder='templates')
@@ -58,7 +58,7 @@ def create():
             return Response(status=500)
     except Exception as ex:
         print('exception encountered creating a client request: ', ex)
-        return '500'
+        return Response(status=500)
 
 
 @feature_api.route('/update', methods=['POST'])
@@ -75,4 +75,21 @@ def update():
             return Response(status=500)
     except Exception as ex:
         print('exception encountered updating client feature request: ', ex)
-        return '500'
+        return Response(status=500)
+
+
+@feature_api.route('/delete', methods=['POST'])
+def delete():
+    """Delete a client's feature request information"""
+    try:
+        payload = request.get_json(force=True)
+        delete_feature = ClientFeatureRequest(**payload)
+        query = ClientFeatureRequest.query.get(int(delete_feature.id))
+
+        if delete_feature_request(query):
+            return Response(status=200)
+        else:
+            return Response(status=500)
+    except Exception as ex:
+        print('exception encountered deleting client request:', ex)
+        return Response(status=500)

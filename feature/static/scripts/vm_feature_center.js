@@ -89,8 +89,8 @@ function model(viewModel) {
         return searchObservableArray(viewModel.product_list, product_id).product_code;
     }
 
-    viewModel.update_client_request = function() {
-        viewModel.feature_article({
+    function get_feature_from_modal(modal_feature) {
+        modal_feature({
             id: viewModel.feature_article().id,
             client_id: viewModel.feature_article().client_id,
             date_created: viewModel.feature_article().date_created,
@@ -103,14 +103,19 @@ function model(viewModel) {
                     ? $("#edit_date_target").val()
                     : viewModel.feature_article().date_target),
         })
-        console.log(viewModel.feature_article())
+    }
+
+    viewModel.update_client_request = function() {
+        get_feature_from_modal(viewModel.feature_article)
         post(base_url + "features/update", viewModel.feature_article())
-        console.log(viewModel.feature_article())
         viewModel.sync_client_requests()
     }
 
     viewModel.delete_client_request = function() {
-        console.log(viewModel.feature_article())
+        get_feature_from_modal(viewModel.feature_article)
+        post(base_url + "features/delete", viewModel.feature_article())
+        $('#modal_presenter').modal('hide');
+        viewModel.sync_client_requests()
     }
 
     get(base_url + "clients", viewModel.client_list)

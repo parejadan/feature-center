@@ -14,12 +14,12 @@
                 <div class="form-group col-sm">
                     <label for="edit_priority_id" data-bind="text: 'Current Priority: ' + priority_id"></label>
                     <select  id="edit_priority_id" class="form-control"
-                             data-bind="options: overall_priority_list"></select>
+                             data-bind="options: overall_priority_list, optionsCaption: '-- --'"></select>
                 </div>
                 <div class="form-group col-sm">
                     <label for="edit_product_id" data-bind="text: 'Current Product: ' + get_product_name(product_id)"></label>
                     <select  id="edit_product_id" class="form-control"
-                             data-bind="options: product_list, optionsValue: 'id', optionsText: 'product_code'"></select>
+                             data-bind="options: product_list, optionsValue: 'id', optionsText: 'product_code', optionsCaption: '-- --'"></select>
                 </div>
                 <div class="form-group col-sm">
                     <label for="edit_date_target" data-bind="text: 'Current Target: ' + date_target"></label>
