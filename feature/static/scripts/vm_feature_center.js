@@ -40,25 +40,23 @@ function model(view) {
                 //todo add parallel the following lines
                 data.available_requests.forEach(function(itm) { priority_list.push(itm)} )
                 data.existing_requests.forEach(function(itm) { client_requests.push(itm)} )
-                data.existing_requests
-                return data
             },
             error: function(data) {
                 console.log("failure" + url)
-                return data
             }
         })
     }
 
     view.sync_client_requests = function() {
-        client_feature_relations = {}
+        view.priority_list([])
+        view.client_requests([])
         get_client_features($("#client_id").val(), view.priority_list, view.client_requests)
         $("#feature_create").prop("disabled", false)
     }
 
-        get(base_url + "clients", view.client_list)
-        get(base_url + "products", view.product_list)
-        get(base_url + "features", view.feature_list)
+    get(base_url + "clients", view.client_list)
+    get(base_url + "products", view.product_list)
+    get(base_url + "features", view.feature_list)
 }
 
 // view routers
