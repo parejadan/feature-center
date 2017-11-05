@@ -132,15 +132,19 @@ function viewModel(view) {
 
     view.view_feature_details = function(feature_id) {
         console.log(feature_id)
+        view.feature_article(feature_id)
     }
 
     //init presenter and define routings
     anchor(view, mapping.feature_add)
+    view.modal_presenter("#feature_details") //for viewing feature details and allowing updates and deletes
 }
 
 //view objects
 var featureAddViewModel = function() {
     this.presenter = ko.observable()
+    this.modal_presenter = ko.observable()
+    this.feature_article = ko.observable()
     this.client_list = ko.observableArray([])
     this.feature_list = ko.observableArray([])
     this.priority_list = ko.observableArray([])

@@ -1,0 +1,41 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="form-group">
+            <input id="title" class="form-control" placeholder="Title"
+                   data-bind="text: feature_article.title"/>
+        </div>
+        <div class="form-group">
+            <textarea id="description" rows="7" class="form-control" placeholder="Description"
+                   data-bind="text: feature_article.description"></textarea>
+        </div>
+        <!-- priority, product, target date fields-->
+        <div class="container">
+            <div class="row">
+                <div class="form-group col-sm">
+                    <label for="priority_id">Priority</label>
+                    <select  id="priority_id" class="form-control"
+                             data-bind="options: priority_list, optionsCaption: feature_article.description"></select>
+                </div>
+                <div class="form-group col-sm">
+                    <label for="product_id">Product</label>
+                    <select  id="product_id" class="form-control"
+                             data-bind="options: product_list, optionsValue: 'id', optionsText: 'product_code', optionsCaption: feature_article.description"></select>
+                </div>
+                <div class="form-group col-sm">
+                    <label for="date_target">Target Date</label>
+                    <input type="date" class="form-control" id="date_target" data-bind="textInput: feature_article.date_target"/>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <div  class="col-sm-12 text-center">
+                        <button class="btn btn-warning inline_block_button" id="feature_create"
+                                data-bind="click: feature_create"> Update </button>
+                        <button class="btn btn-danger inline_block_button" id="reset_feature_form"
+                                data-bind="click: clean_feature_form"> Delete </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

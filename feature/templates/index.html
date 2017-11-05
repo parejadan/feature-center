@@ -22,9 +22,14 @@
     <!--navigation bar end-->
 
     <div id="presenter" class="container jumbotron" data-bind="template: presenter"></div>
+    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog"
+         aria-labelledby="myLargeModalLabel" aria-hidden="true"
+         id="modal_presenter" data-bind="template: modal_presenter">
+    </div>
 
     <template id="#feature_add">{% include 'feature_add.html' %}</template>
     <template id="#reports">{% include 'reports.html' %}</template>
+    <template id="#feature_details">{% include 'feature_details.html' %}</template>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
