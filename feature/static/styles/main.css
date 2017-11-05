@@ -2,3 +2,8 @@ body {
     font-family: 'Open Sans', sans-serif;
     font-size: 48px;
 }
+
+.inline_block_button {
+    display: inline-block;
+    vertical-align: top;
+}

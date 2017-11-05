@@ -11,8 +11,3 @@ def index():
         return basic_select(Client)
     except Exception as ex:
         print("issue encountered while getting client data", ex)
-
-
-@client_api.route('/get<client_id>')
-def get_by_id(client_id):
-    return basic_select(Client, client_id)

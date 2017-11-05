@@ -1,0 +1,28 @@
+<div>
+    <h3>Reports</h3>
+    <hr class="my-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Client</th>
+                <th>Product</th>
+                <th>Priority</th>
+                <th>Target Date</th>
+                <th>Date Created</th>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: feature_list">
+            <tr>
+                <td><span data-bind="text: title"></span></td>
+                <td><button class="btn btn-primary" data-bind="click: view_feature_details.bind(id)">View</button></td>
+                <td><span data-bind="text: get_client_name(client_id)"></span></td>
+                <td><span data-bind="text: get_product_name(product_id)"></span></td>
+                <td><span data-bind="text: priority_id"></span></td>
+                <td><span data-bind="text: date_target"></span></td>
+                <td><span data-bind="text: date_created"></span></td>
+            </tr>
+        </tbody>
+    </table>
+</div>

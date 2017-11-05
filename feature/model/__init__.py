@@ -4,6 +4,13 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+def safe_serialize(obj):
+    try:
+        return obj.serialized()
+    except Exception as ex:
+        print('unable to serialize {}'.format(obj), ex)
+
+
 class ProductTypes(db.Model):  # existing product types
     __tablename__ = 'product_types'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -12,11 +19,14 @@ class ProductTypes(db.Model):  # existing product types
                                       backref='ProductTypes', lazy=True)
 
     def to_dict(self):
-        serialized = {
+        return safe_serialize(self)
+
+    def serialized(self):
+        _serialized = {
             'id': self.id,
             'product_code': self.product_code,
         }
-        return serialized
+        return _serialized
 
 
 class Client(db.Model):
@@ -30,20 +40,23 @@ class Client(db.Model):
                                        backref='Client', lazy=True)
 
     def to_dict(self):
-        serialized = {
+        return safe_serialize(self)
+
+    def serialized(self):
+        _serialized = {
             'id': self.id,
             'name': self.name,
             'email': self.email,
             'phone_number': self.phone_number,
             'product_id': self.product_id,
-            # 'request_relation': self.request_relation
         }
-        return serialized
+        return _serialized
 
 
 class ClientFeatureRequest(db.Model):
     __tablename__ = 'client_feature_request'
-    id = db.Column(db.Integer, unique=True, autoincrement=True)  # we only care that it's unique
+    # we only care that it's unique
+    id = db.Column(db.Integer, db.Sequence("seq_client_feature_request_id"), unique=True, nullable=False)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text, nullable=False)
     # what really matters is that for each feature request a client has, it's priority is unique per product
@@ -54,14 +67,17 @@ class ClientFeatureRequest(db.Model):
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())  # keep track client request vs target
 
     def to_dict(self):
-        serialized = {
+        return safe_serialize(self)
+
+    def serialized(self):
+        _serialized = {
             'id': self.id,
             'title': self.title,
             'description': self.description,
             'client_id': self.client_id,
             'product_id': self.product_id,
             'priority_id': self.priority_id,
-            'date_target': self.date_target.strftime("%Y-%m-%d %H:%M:%S"),
-            'date_created': self.date_target.strftime("%Y-%m-%d %H:%M:%S")
+            'date_target': self.date_target.strftime("%m-%d-%Y"),
+            'date_created': self.date_target.strftime("%m-%d-%Y")
         }
-        return serialized
+        return _serialized

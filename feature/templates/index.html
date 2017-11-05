@@ -14,8 +14,7 @@
         <div class="navbar-nav-scroll">
             <ul class="navbar-nav bd-navbar-nav flex-row">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#feature_add" data-bind="click: feature_add">Submit Feature Request</a></li>
-                <li class="nav-item"> <a class="nav-link" href="#features" data-bind="click: features">Requested Features</a> </li>
+                    <a class="nav-link" href="#feature_add" data-bind="click: feature_add">Submit Feature Request</a></li>
                 <li class="nav-item"> <a class="nav-link" href="#reports" data-bind="click: reports" >Reports</a> </li>
             </ul>
         </div>
@@ -25,7 +24,6 @@
     <div id="presenter" class="container jumbotron" data-bind="template: presenter"></div>
 
     <template id="#feature_add">{% include 'feature_add.html' %}</template>
-    <template id="#features">{% include 'features.html' %}</template>
     <template id="#reports">{% include 'reports.html' %}</template>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

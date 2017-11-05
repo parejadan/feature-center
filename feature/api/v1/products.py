@@ -7,4 +7,7 @@ product_api = Blueprint('products', __name__, template_folder='templates')
 
 @product_api.route('/')
 def index():
-    return basic_select(ProductTypes)
+    try:
+        return basic_select(ProductTypes)
+    except Exception as ex:
+        print('exception encountered pulling existing products: ', ex)
