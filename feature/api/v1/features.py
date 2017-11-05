@@ -8,8 +8,10 @@ PRIORITY_REQUEST_LIMIT = 5
 _priority_list = [p+1 for p in range(PRIORITY_REQUEST_LIMIT)]
 
 
-@feature_api.route('/')  # get all features (should be lazy loading)
+@feature_api.route('/')
 def index():
+    """Returns all features"""
+    # todo lazy load data for UI (receive index)
     try:
         query = ClientFeatureRequest.query.order_by('priority_id').all()
         return to_json_dump(query)
@@ -35,8 +37,18 @@ def get_client_requests(client_id):
         print('exception encountered pulling client requests: ', ex)
 
 
+@feature_api.route('/getOverallPriorities')
+def get_priority_set():
+    """Returns generic available priorities for any client"""
+    try:
+        return to_json_dump(_priority_list, False)
+    except Exception as ex:
+        print('exception encountered returning generic priority set', ex)
+
+
 @feature_api.route('/create', methods=['POST'])
 def create():
+    """creates a client feature request"""
     try:
         payload = request.get_json(force=True)
         request_feature = ClientFeatureRequest(**payload)

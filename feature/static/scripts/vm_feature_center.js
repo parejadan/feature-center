@@ -77,7 +77,8 @@ function model(viewModel) {
     }
 
     viewModel.sync_reports = function() {
-            get(base_url + "features", viewModel.feature_list)
+        viewModel.feature_list([])
+        get(base_url + "features", viewModel.feature_list)
     }
 
     viewModel.get_client_name = function(client_id) {
@@ -88,8 +89,17 @@ function model(viewModel) {
         return searchObservableArray(viewModel.product_list, product_id).product_code;
     }
 
+    viewModel.update_client_request = function() {
+        console.log(viewModel.feature_article())
+    }
+
+    viewModel.delete_client_request = function() {
+        console.log(viewModel.feature_article())
+    }
+
     get(base_url + "clients", viewModel.client_list)
     get(base_url + "products", viewModel.product_list)
+    get(base_url + "features/getOverallPriorities", viewModel.overall_priority_list)
 }
 
 function viewModel(view) {
@@ -123,6 +133,7 @@ function viewModel(view) {
 
     view.feature_add = function() {
         anchor(view, mapping.feature_add)
+        view.clean_feature_form()
     }
 
     view.reports = function() {
@@ -131,8 +142,8 @@ function viewModel(view) {
     }
 
     view.view_feature_details = function(feature_id) {
-        console.log(feature_id)
         view.feature_article(feature_id)
+        console.log(view.feature_article())
     }
 
     //init presenter and define routings
@@ -144,10 +155,11 @@ function viewModel(view) {
 var featureAddViewModel = function() {
     this.presenter = ko.observable()
     this.modal_presenter = ko.observable()
-    this.feature_article = ko.observable()
+    this.feature_article = ko.observable({})
     this.client_list = ko.observableArray([])
     this.feature_list = ko.observableArray([])
     this.priority_list = ko.observableArray([])
+    this.overall_priority_list = ko.observableArray([])
     this.product_list = ko.observableArray([])
     this.client_requests = ko.observableArray([])
 

@@ -7,6 +7,8 @@ client_api = Blueprint('clients', __name__, template_folder='templates')
 
 @client_api.route('/')
 def index():
+    """Returns overall available clients"""
+    # todo: lazy load data
     try:
         return basic_select(Client)
     except Exception as ex:

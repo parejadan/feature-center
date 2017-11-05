@@ -7,6 +7,8 @@ product_api = Blueprint('products', __name__, template_folder='templates')
 
 @product_api.route('/')
 def index():
+    """Returns overall available products"""
+    # todo: lazy load data
     try:
         return basic_select(ProductTypes)
     except Exception as ex:
