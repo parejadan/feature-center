@@ -90,7 +90,23 @@ function model(viewModel) {
     }
 
     viewModel.update_client_request = function() {
+        viewModel.feature_article({
+            id: viewModel.feature_article().id,
+            client_id: viewModel.feature_article().client_id,
+            date_created: viewModel.feature_article().date_created,
+            title: $("#edit_title").val(),
+            description: $("#edit_description").val(),
+            priority_id: $("#edit_priority_id").val(),
+            product_id: $("#edit_product_id").val(),
+            date_target: (
+                ($("#edit_date_target").val().length)
+                    ? $("#edit_date_target").val()
+                    : viewModel.feature_article().date_target),
+        })
         console.log(viewModel.feature_article())
+        post(base_url + "features/update", viewModel.feature_article())
+        console.log(viewModel.feature_article())
+        viewModel.sync_client_requests()
     }
 
     viewModel.delete_client_request = function() {
@@ -143,7 +159,6 @@ function viewModel(view) {
 
     view.view_feature_details = function(feature_id) {
         view.feature_article(feature_id)
-        console.log(view.feature_article())
     }
 
     //init presenter and define routings

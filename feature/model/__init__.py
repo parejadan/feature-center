@@ -56,13 +56,14 @@ class Client(db.Model):
 class ClientFeatureRequest(db.Model):
     __tablename__ = 'client_feature_request'
     # we only care that it's unique
-    id = db.Column(db.Integer, db.Sequence("seq_client_feature_request_id"), unique=True, nullable=False)
+    # db.Sequence("seq_client_feature_request_id"), unique=True
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(50), nullable=False)
     description = db.Column(db.Text, nullable=False)
     # what really matters is that for each feature request a client has, it's priority is unique per product
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'), primary_key=True)
     product_id = db.Column(db.Integer, db.ForeignKey('product_types.id'))  # read requirements closer, primary_key=True)
-    priority_id = db.Column(db.Integer, primary_key=True)
+    priority_id = db.Column(db.Integer)
     date_target = db.Column(db.DateTime, nullable=True)  # target date might not be finalized
     date_created = db.Column(db.DateTime, default=db.func.current_timestamp())  # keep track client request vs target
 
@@ -78,6 +79,6 @@ class ClientFeatureRequest(db.Model):
             'product_id': self.product_id,
             'priority_id': self.priority_id,
             'date_target': self.date_target.strftime("%m-%d-%Y"),
-            'date_created': self.date_target.strftime("%m-%d-%Y")
+            'date_created': self.date_created.strftime("%m-%d-%Y")
         }
         return _serialized

@@ -1,6 +1,6 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, Response
 from feature.model import ClientFeatureRequest
-from feature.model.logic import to_dict, to_json_dump, basic_insert
+from feature.model.logic import to_dict, to_json_dump, basic_insert, update_features_request
 
 
 feature_api = Blueprint('features', __name__, template_folder='templates')
@@ -53,9 +53,26 @@ def create():
         payload = request.get_json(force=True)
         request_feature = ClientFeatureRequest(**payload)
         if basic_insert(request_feature):
-            return '200'
+            return Response(status=200)
         else:
-            return '500'
+            return Response(status=500)
     except Exception as ex:
         print('exception encountered creating a client request: ', ex)
+        return '500'
+
+
+@feature_api.route('/update', methods=['POST'])
+def update():
+    """Update a client's feature request information"""
+    try:
+        payload = request.get_json(force=True)
+        updated_feature = ClientFeatureRequest(**payload)
+        query = ClientFeatureRequest.query.filter(ClientFeatureRequest.client_id == updated_feature.client_id) \
+            .order_by('priority_id').all()
+        if update_features_request(updated_feature, query):
+            return Response(status=200)
+        else:
+            return Response(status=500)
+    except Exception as ex:
+        print('exception encountered updating client feature request: ', ex)
         return '500'
