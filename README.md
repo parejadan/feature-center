@@ -12,7 +12,7 @@ Setup Guide for Localhost
 - developed using Python3+
 - Smoke tested with: Windows Subsystem Linix, Linux
 - __Installing Python Dependencies__
-  1. `sudo apt-get python3-pip` # get package manager
+  1. `sudo apt-get install python3-pip` # get package manager
   2. `sudo pip3 install virtualenv` # for making sure python setup is clean
   3. `virtualenv env` # execute this within project directory
   4. `source env/bin/activate` # you're now in virtual environment and ready to install python depencendies
