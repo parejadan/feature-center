@@ -96,8 +96,14 @@ function model(viewModel) {
             date_created: viewModel.feature_article().date_created,
             title: $("#edit_title").val(),
             description: $("#edit_description").val(),
-            priority_id: $("#edit_priority_id").val(),
-            product_id: $("#edit_product_id").val(),
+            priority_id: (
+                 ($("#edit_priority_id").val().length)
+                 ? $("#edit_priority_id").val()
+                 : viewModel.feature_article().priority_id),
+            product_id: (
+                ($("#edit_product_id").val().length)
+                    ? $("#edit_product_id").val()
+                    : viewModel.feature_article().product_id),
             date_target: (
                 ($("#edit_date_target").val().length)
                     ? $("#edit_date_target").val()
