@@ -4,7 +4,8 @@
     "host":"localhost",
     "port":5432,
     "db":"feature_center",
-    "SQLALCHEMY_TRACK_MODIFICATIONS":false,
     "SQLALCHEMY_DATABASE_URI": "postgresql://{}:{}@{}:{}/{}",
-    "SETUP_DATABASE":false
+    "SQLALCHEMY_TRACK_MODIFICATIONS":false,
+    "REGRESSION_TEST_HOST":"http://localhost:5000",
+    "REGRESSION_DRIVER":"chrome/{}/chromedriver.exe"
 }

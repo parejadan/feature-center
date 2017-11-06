@@ -9,6 +9,7 @@ def safe_serialize(obj):
         return obj.serialized()
     except Exception as ex:
         print('unable to serialize {}'.format(obj), ex)
+        raise ex
 
 
 class ProductTypes(db.Model):  # existing product types

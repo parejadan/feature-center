@@ -32,11 +32,7 @@ def update_features_request(updated_feature, query):
                 feature.priority_id = int(updated_feature.priority_id)
                 feature.product_id = int(updated_feature.product_id)
                 feature.date_target = updated_feature.date_target
-        # determine feature being updated rank got demoted
-        if cur_priority < int(updated_feature.priority_id):
-            promote_peer_priority(query, updated_feature, cur_priority)  # promote peers
-        elif cur_priority > int(updated_feature.priority_id):
-            demote_peer_priority(query, updated_feature, cur_priority)  # demote peers
+        update_peer_priority(query, updated_feature, cur_priority)
         db.session.commit()
         return True
     except Exception as ex:
@@ -52,6 +48,14 @@ def delete_feature_request(delete_feature):
     except Exception as ex:
         print('exception encountered deleting feature request', ex)
         return False
+
+
+def update_peer_priority(query, updated_feature, cur_priority):
+    """determine feature being updated rank got demoted"""
+    if cur_priority < int(updated_feature.priority_id):
+        promote_peer_priority(query, updated_feature, cur_priority)  # promote peers
+    elif cur_priority > int(updated_feature.priority_id):
+        demote_peer_priority(query, updated_feature, cur_priority)  # demote peers
 
 
 def promote_peer_priority(query, updated_feature, cur_rank):

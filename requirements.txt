@@ -5,5 +5,8 @@ itsdangerous==0.24
 Jinja2==2.9.6
 MarkupSafe==1.0
 psycopg2==2.7.3.2
+py==1.4.34
+pytest==3.2.3
+selenium==3.7.0
 SQLAlchemy==1.1.14
 Werkzeug==0.12.2

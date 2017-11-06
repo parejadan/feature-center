@@ -13,7 +13,8 @@ class ConfigManager:
         self._db = self._config_cache['db']
         self._database_uri = self._config_cache['SQLALCHEMY_DATABASE_URI']
         self._track_modifications = self._config_cache['SQLALCHEMY_TRACK_MODIFICATIONS']
-        self.setup_database = self._config_cache['SETUP_DATABASE']
+        self.REGRESSION_TEST_HOST = self._config_cache['REGRESSION_TEST_HOST']
+        self.REGRESSION_DRIVER = self._config_cache['REGRESSION_DRIVER']
 
     @staticmethod
     def _get_config(file):
