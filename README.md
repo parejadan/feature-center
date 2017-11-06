@@ -64,8 +64,11 @@ UI TODO
 
 Infrastructure TODO
 -------------------
-- [ ] setup deployment pipeline from git
+- [x] setup deployment pipeline from git (requires dynamic dns setup script, and checking to live branch auto execute runserver.py)
 - [x] refactor project structure for different service version supports (follow javascript/bootstrap practices)
+- [ ] create script for dynamic dns setup if IP changes
+- [ ] trouble shoot script that detects checkin to prod branch
+- [ ] create script to send out email of whatever tests that fail in remote branch (IAT)
 
 Extra/Missing
 -------------
