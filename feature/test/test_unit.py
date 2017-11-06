@@ -28,7 +28,7 @@ def test_peer_priority_update():
     # demote or promote peers to accommodate change
     update_peer_priority(cadets, promotee, random_promotee)
     # validate we always have unique ranks
-    new_ranks_stats = [c.priority_id for c in cadets]
+    new_ranks_stats = set([c.priority_id for c in cadets]) # set only returns unique tokens from list 
     assert len(ranks) == len(new_ranks_stats)
 
 
