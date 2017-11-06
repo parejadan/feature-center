@@ -33,7 +33,7 @@ Setup Guide for Localhost
   10. `\q` # exit so we can execute initdb.py
   11. `python3 initdb.py` # if you get error beccause some package is not install repeat step 4 in Python Dependencies section
   12. `python3 runserveer.py` # no fancy gunicorn to serve your app. Feel free to modify the runserver.py for it though
-  13. Navigate in your browser to localhost:5000
+  13. Navigate in your browser to localhost:8080
   14. Break it and post issues :)
   
 
