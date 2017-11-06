@@ -23,7 +23,7 @@ Setup Guide for Localhost
   - login credentials of that user should then get specified in config.json file located in root of this directory
   1. `sudo su postgres` # postgres creates user postgres with empty password
   2. `psql` # if don't get the stupid _'.s.PGSQL.5432?'_ (PORT ERROR), skip steps 3-5 
-  3. `exit`
+  3. in postgres type `\q` then exit postgres account using `exit`
   4. `sudo service postgres restart` # if this doesn't work google is your best friend
   5. `sudo su postgres`
   6. `CREATE ROLE _enter_config_user_name;` # semicolen is important; then setup password for roll (google)
