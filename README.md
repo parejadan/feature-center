@@ -25,7 +25,7 @@ Setup Guide for Localhost
   2. `psql` # if don't get the stupid _'.s.PGSQL.5432?'_ (PORT ERROR), skip steps 3-5 
   3. in postgres type `\q` then exit postgres account using `exit`
   4. `sudo service postgres restart` # if this doesn't work google is your best friend
-  5. `sudo su postgres`
+  5. `sudo su postgres` to go back to posgres account, then `psql` should work now
   6. `CREATE ROLE _enter_config_user_name;` # semicolen is important; then setup password for roll (google)
   7. `ALTER ROLE _enter_config_user_name CREATEDB;`
   8. `CREATE DATABASE _enter_config_database_name;`
