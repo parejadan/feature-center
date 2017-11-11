@@ -1,67 +1,45 @@
 import json
-from feature.model import db
 
 
-def basic_select(table, id=None):
-    try:
-        if id is None:
-            query = table.query.order_by('id').all()
-            return to_json_dump(query)
-        else:
-            query = table.query.get(id)
-            return to_json_dump(query)
-    except Exception as ex:
-        print('exception encountered pulling records for {]:'.format(table), ex)
-
-
-def basic_insert(trans):
-    try:
-        db.session.add(trans)
-        db.session.commit()
-    except Exception as ex:
-        print('exception encountered executing transaction', ex)
-
-
-def update_features_request(updated_feature, query):
+def update_feature_and_peers(updated_feature, feature_space):
     """updated_feature.id & updated_feature.priority_id is expected to be numeric"""
     try:
-        cur_priority = -1
-        for feature in query:
-            if feature.id == updated_feature.id:  # update all the information for supplied priority
-                cur_priority = feature.priority_id
-                feature.title, feature.description = updated_feature.title, updated_feature.description
-                feature.priority_id = updated_feature.priority_id
-                feature.product_id = updated_feature.product_id
-                feature.date_target = updated_feature.date_target
-        update_peer_priority(query, updated_feature, cur_priority)
-        db.session.commit()
-        return True
+        cur_priority = update_feature_data(feature_space, updated_feature)
+        update_peer_priority(feature_space, updated_feature, cur_priority)
     except Exception as ex:
-        print('exception encountered commiting transaction update: ', ex)
-        return False
+        print('exception encountered updating feature : ', ex)
 
 
-def delete_feature_request(delete_feature):
-    try:
-        db.session.delete(delete_feature)
-        db.session.commit()
-        return True
-    except Exception as ex:
-        print('exception encountered deleting feature request', ex)
-        return False
+def update_feature_data(feature_space, updated_feature_date):
+    """updates feature data in feature_space set with updated_feature_data
+       returns: None if the updated_feature_date.id does not exists in feature_space,
+       otherwise returns previous priority value for feature being updated"""
+    for feature in feature_space:
+        if feature.id == updated_feature_date.id:
+            previous_priority = feature.priority_id
+            feature.title, feature.description = updated_feature_date.title, updated_feature_date.description
+            feature.priority_id = updated_feature_date.priority_id
+            feature.product_id = updated_feature_date.product_id
+            feature.date_target = updated_feature_date.date_target
+            return previous_priority
+    return None
 
 
-def update_peer_priority(query, updated_feature, cur_priority):
-    """determine feature being updated rank got demoted"""
+def update_peer_priority(feature_space, updated_feature, cur_priority):
+    """determine feature being updated rank got demoted
+       updated_feature: feature that was updated - priority_id is expected to already be updated
+       cur_rank: previous priority of updated_feature before it was changed"""
     if cur_priority < updated_feature.priority_id:
-        promote_peer_priority(query, updated_feature, cur_priority)  # promote peers
+        promote_peer_priority(feature_space, updated_feature, cur_priority)  # promote peers
     elif cur_priority > updated_feature.priority_id:
-        demote_peer_priority(query, updated_feature, cur_priority)  # demote peers
+        demote_peer_priority(feature_space, updated_feature, cur_priority)  # demote peers
 
 
-def promote_peer_priority(query, updated_feature, cur_rank):
-    """Promote every one else between your old to new demoted rank"""
-    for feature in query:
+def promote_peer_priority(feature_space, updated_feature, cur_rank):
+    """PROMOTES every one else between your old to new demoted rank
+       updated_feature: feature that was updated - priority_id is expected to already be updated
+       cur_rank: previous priority of updated_feature before it was changed"""
+    for feature in feature_space:
         if feature.id != updated_feature.id:
             # feature's rank is lower (n being the lowest)
             if feature.priority_id > cur_rank:
@@ -70,9 +48,11 @@ def promote_peer_priority(query, updated_feature, cur_rank):
                     feature.priority_id -= 1  # we promote you a rank higher
 
 
-def demote_peer_priority(query, updated_feature, cur_rank):
-    """demote every one else from your current to new promoted rank"""
-    for feature in query:
+def demote_peer_priority(feature_space, updated_feature, cur_rank):
+    """DEMOTES every one else from your current to new promoted rank
+       updated_feature: feature that was updated - priority_id is expected to already be updated
+       cur_rank: previous priority of updated_feature before it was changed"""
+    for feature in feature_space:
         if feature.id != updated_feature.id:
             # feature's rank is higher (0 being highest)
             if feature.priority_id < cur_rank:
@@ -82,6 +62,7 @@ def demote_peer_priority(query, updated_feature, cur_rank):
 
 
 def to_dict(obj):
+    """converts feature.model obj (or obj set) set to serialized dict version"""
     obj_len = len(obj)
     if obj_len > 1:
         return [o.to_dict() for o in obj]
@@ -92,6 +73,7 @@ def to_dict(obj):
 
 
 def to_json_dump(obj, cast=True, seprtrs=(',', ':')):
+    """serializes feature.model obj or list of objects to json string"""
     try:
         if cast:
             payload = to_dict(obj)

@@ -1,6 +1,6 @@
 from flask import Blueprint
 from feature.model import ProductTypes
-from feature.model.logic import basic_select
+from feature.model.transaction import Transaction
 
 product_api = Blueprint('products', __name__, template_folder='templates')
 
@@ -10,6 +10,6 @@ def index():
     """Returns overall available products"""
     # todo: lazy load data
     try:
-        return basic_select(ProductTypes)
+        return Transaction.basic_select(ProductTypes, order_key='id')
     except Exception as ex:
         print('exception encountered pulling existing products: ', ex)

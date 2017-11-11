@@ -1,5 +1,5 @@
 from flask import Blueprint
-from feature.model.logic import basic_select
+from feature.model.transaction import Transaction
 from feature.model import Client
 
 client_api = Blueprint('clients', __name__, template_folder='templates')
@@ -10,6 +10,6 @@ def index():
     """Returns overall available clients"""
     # todo: lazy load data
     try:
-        return basic_select(Client)
+        return Transaction.basic_select(Client, order_key='id')
     except Exception as ex:
         print("issue encountered while getting client data", ex)

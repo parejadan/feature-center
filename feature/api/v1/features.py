@@ -1,11 +1,13 @@
 from flask import Blueprint, request, Response
 from feature.model import ClientFeatureRequest
-from feature.model.logic import to_dict, to_json_dump, basic_insert, update_features_request, delete_feature_request
+from feature.model.logic import to_dict, to_json_dump, update_feature_and_peers
+from feature.model.transaction import Transaction
 
 
 feature_api = Blueprint('features', __name__, template_folder='templates')
 PRIORITY_REQUEST_LIMIT = 5
 _priority_list = [p+1 for p in range(PRIORITY_REQUEST_LIMIT)]
+_transInterface = Transaction()
 
 
 @feature_api.route('/')
@@ -52,10 +54,7 @@ def create():
     try:
         payload = request.get_json(force=True)
         request_feature = ClientFeatureRequest(**payload)
-        if basic_insert(request_feature):
-            return Response(status=200)
-        else:
-            return Response(status=500)
+        return execute_trans_for_response(request_feature, _transInterface.INSERT)
     except Exception as ex:
         print('exception encountered creating a client request: ', ex)
         return Response(status=500)
@@ -71,10 +70,9 @@ def update():
             .order_by('priority_id').all()
         # cast once for numerical comparison of IDs
         updated_feature.id, updated_feature.priority_id = int(updated_feature.id), int(updated_feature.priority_id)
-        if update_features_request(updated_feature, query):
-            return Response(status=200)
-        else:
-            return Response(status=500)
+        update_feature_and_peers(updated_feature, query)
+
+        return execute_trans_for_response(query, _transInterface.UPDATE)
     except Exception as ex:
         print('exception encountered updating client feature request: ', ex)
         return Response(status=500)
@@ -86,12 +84,17 @@ def delete():
     try:
         payload = request.get_json(force=True)
         delete_feature = ClientFeatureRequest(**payload)
-        query = ClientFeatureRequest.query.get(int(delete_feature.id))
+        query = _transInterface.basic_select(ClientFeatureRequest, _id=delete_feature.id)
 
-        if delete_feature_request(query):
-            return Response(status=200)
-        else:
-            return Response(status=500)
+        return execute_trans_for_response(query, _transInterface.DELETE)
     except Exception as ex:
         print('exception encountered deleting client request:', ex)
+        return Response(status=500)
+
+
+def execute_trans_for_response(query, t_type):
+    """Assures API response for CRUD request matches transaction result"""
+    if _transInterface.commit(query, t_type):
+        return Response(status=200)
+    else:
         return Response(status=500)
