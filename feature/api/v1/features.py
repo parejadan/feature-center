@@ -84,7 +84,7 @@ def delete():
     try:
         payload = request.get_json(force=True)
         delete_feature = ClientFeatureRequest(**payload)
-        query = _transInterface.basic_select(ClientFeatureRequest, _id=delete_feature.id)
+        query = _transInterface.basic_select(ClientFeatureRequest, _id=delete_feature.id, _cast=False)
 
         return execute_trans_for_response(query, _transInterface.DELETE)
     except Exception as ex:

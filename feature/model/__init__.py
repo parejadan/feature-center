@@ -12,7 +12,7 @@ def safe_serialize(obj):
         raise ex
 
 
-class ProductTypes(db.Model):  # existing product types
+class ProductTypes(db.Model, object):  # existing product types
     __tablename__ = 'product_types'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     product_code = db.Column(db.String(50), nullable=False)
@@ -30,7 +30,7 @@ class ProductTypes(db.Model):  # existing product types
         return _serialized
 
 
-class Client(db.Model):
+class Client(db.Model, object):
     __tablename__ = 'client'
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(50), nullable=False)
@@ -54,7 +54,7 @@ class Client(db.Model):
         return _serialized
 
 
-class ClientFeatureRequest(db.Model):
+class ClientFeatureRequest(db.Model, object):
     __tablename__ = 'client_feature_request'
     # we only care that it's unique
     # db.Sequence("seq_client_feature_request_id"), unique=True

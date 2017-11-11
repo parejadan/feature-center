@@ -26,7 +26,7 @@ class Transaction:
             return False
 
     @staticmethod
-    def basic_select(table, order_key=None, _id=None):
+    def basic_select(table, order_key=None, _id=None, _cast=True):
         try:
             if _id is None:
                 query = table.query
@@ -35,10 +35,13 @@ class Transaction:
                     query = query.order_by(order_key)
 
                 query = query.all()
+            else:
+                query = table.query.get(_id)
+
+            if _cast:
                 return to_json_dump(query)
             else:
-                query = table.query.get(id)
-                return to_json_dump(query)
+                return query
         except Exception as ex:
             print('exception encountered pulling records from {}: '.format(table), ex)
 

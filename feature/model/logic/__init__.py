@@ -63,11 +63,10 @@ def demote_peer_priority(feature_space, updated_feature, cur_rank):
 
 def to_dict(obj):
     """converts feature.model obj (or obj set) set to serialized dict version"""
-    obj_len = len(obj)
-    if obj_len > 1:
+    if type(obj) in [type([]), type(())]:
         return [o.to_dict() for o in obj]
-    elif obj_len == 1:
-        return [obj[0].to_dict()]
+    elif not(obj is None) and hasattr(obj, 'to_dict'):
+        return obj.to_dict()
     else:
         return []
 

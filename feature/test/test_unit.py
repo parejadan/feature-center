@@ -37,4 +37,5 @@ def test_peer_priority_update():
     new_ranks_stats = set([c.priority_id for c in cadets])  # set only returns unique tokens from list
     assert len(rank_set) == len(new_ranks_stats)
 
-
+# todo add unit tests for basic transaction object
+# todo add unit tests for logic methods

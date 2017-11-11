@@ -21,3 +21,4 @@ from random import random
 ####   when a feature's priority gets updated, that all other features get their priority rank updated correctly
 ####   (not to be confused with unit test that only validates priority set uniqueness)
 # bug 4 (fixed): validate that when a feature is getting edited, no dropdown default value overrides previous value
+# todo add tests for CRUD transaction
