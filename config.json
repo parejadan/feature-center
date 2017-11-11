@@ -6,6 +6,7 @@
     "db":"feature_center",
     "SQLALCHEMY_DATABASE_URI": "postgresql://{}:{}@{}:{}/{}",
     "SQLALCHEMY_TRACK_MODIFICATIONS":false,
-    "REGRESSION_TEST_HOST":"http://localhost:5000",
-    "REGRESSION_DRIVER":"chrome/{}/chromedriver.exe"
+    "REGRESSION_DRIVER":"chrome/{}/chromedriver.exe",
+    "app_port":8080,
+    "app_host":"0.0.0.0"
 }

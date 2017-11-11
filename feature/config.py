@@ -5,16 +5,18 @@ from feature.model import db
 class ConfigManager:
     def __init__(self, file='config.json'):
         """load application configurations from json - alternative to env variables"""
-        self._config_cache = self._get_config(file)
-        self._user = self._config_cache['user']
-        self._password = self._config_cache['password']
-        self._host = self._config_cache['host']
-        self._port = self._config_cache['port']
-        self._db = self._config_cache['db']
-        self._database_uri = self._config_cache['SQLALCHEMY_DATABASE_URI']
-        self._track_modifications = self._config_cache['SQLALCHEMY_TRACK_MODIFICATIONS']
-        self.REGRESSION_TEST_HOST = self._config_cache['REGRESSION_TEST_HOST']
-        self.REGRESSION_DRIVER = self._config_cache['REGRESSION_DRIVER']
+        _config_cache = self._get_config(file)
+        self._user = _config_cache['user']
+        self._password = _config_cache['password']
+        self._host = _config_cache['host']
+        self._port = _config_cache['port']
+        self._db = _config_cache['db']
+        self._database_uri = _config_cache['SQLALCHEMY_DATABASE_URI']
+        self._track_modifications = _config_cache['SQLALCHEMY_TRACK_MODIFICATIONS']
+        self.app_host, self.app_port = _config_cache['app_host'], _config_cache['app_port']
+        self.REGRESSION_TEST_URL = '{}:{}'.format(self.app_host, self.app_port)
+        self.REGRESSION_DRIVER = _config_cache['REGRESSION_DRIVER']
+        
 
     @staticmethod
     def _get_config(file):

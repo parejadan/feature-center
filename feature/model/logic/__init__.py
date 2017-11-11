@@ -11,7 +11,7 @@ def basic_select(table, id=None):
             query = table.query.get(id)
             return to_json_dump(query)
     except Exception as ex:
-        print('exception encountered pulling records for {}:'.format(table), ex)
+        print('exception encountered pulling records for {]:'.format(table), ex)
 
 
 def basic_insert(trans):

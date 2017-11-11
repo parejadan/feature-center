@@ -1,14 +1,14 @@
 import pytest
 from random import random
-import platform
-from feature import env_config
-from selenium import webdriver
+#import platform
+#from feature import env_config
+#from selenium import webdriver
 
 
-class TestFunctional:
-    def __init__(self):
-        self.base_url = env_config.REGRESSION_TEST_HOST
-        self.driver = webdriver.Chrome(executable_path=r'' + env_config.REGRESSION_DRIVER.format(platform.system()))
+#class TestFunctional:
+#    def __init__(self):
+#        self.base_url = env_config.REGRESSION_TEST_URL
+#        self.driver = webdriver.Chrome(executable_path=r'' + env_config.REGRESSION_DRIVER.format(platform.system()))
 
 
 # functional test that should get written:

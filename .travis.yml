@@ -1,0 +1,27 @@
+language: python
+python: 
+    - "3.3"
+    - "3.4"
+    - "3.5"
+services:
+    - postgresql  # sets up postgres of the shelf
+before_script:
+    - sudo apt-get update
+    - sudo apt-get install python3-pip
+    - # already contains virtualenv installed by default (travis)
+    - apt-get install jq  # doesn't break if aleady installed
+    - DB=$(jq '.db' config.json)  # extract database from environment config
+    - USER=$(jq '.user' config.json)  # extract env user
+    - PASSWORD=$(jq '.password' config.json)  # extract env 
+    - psql -c "CREATE DATABASE $DB;" -U postgres
+    - psql -c "CREATE USER $USER WITH PASSWORD $PASSWORD;" -U postgres
+    - # psql -c "ALTER ROLE $USER CREATEDB;"  -U postgres  # add default permissions for app user
+    - psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB TO $USER;"  
+install:
+    - pip3 install r requirements.txt
+script:
+    - python3 initdb.py  # initialize database setup
+    - python3 py.test
+after_success:
+    - # deploy application to remote server
+    - # launch application in remote server
