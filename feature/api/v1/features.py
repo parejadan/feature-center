@@ -69,6 +69,8 @@ def update():
         updated_feature = ClientFeatureRequest(**payload)
         query = ClientFeatureRequest.query.filter(ClientFeatureRequest.client_id == updated_feature.client_id) \
             .order_by('priority_id').all()
+        # cast once for numerical comparison of IDs
+        updated_feature.id, updated_feature.priority_id = int(updated_feature.id), int(updated_feature.priority_id)
         if update_features_request(updated_feature, query):
             return Response(status=200)
         else:

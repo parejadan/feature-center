@@ -23,14 +23,15 @@ def basic_insert(trans):
 
 
 def update_features_request(updated_feature, query):
+    """updated_feature.id & updated_feature.priority_id is expected to be numeric"""
     try:
         cur_priority = -1
         for feature in query:
-            if feature.id == int(updated_feature.id):  # update all the information for supplied priority
-                cur_priority = int(feature.priority_id)
+            if feature.id == updated_feature.id:  # update all the information for supplied priority
+                cur_priority = feature.priority_id
                 feature.title, feature.description = updated_feature.title, updated_feature.description
-                feature.priority_id = int(updated_feature.priority_id)
-                feature.product_id = int(updated_feature.product_id)
+                feature.priority_id = updated_feature.priority_id
+                feature.product_id = updated_feature.product_id
                 feature.date_target = updated_feature.date_target
         update_peer_priority(query, updated_feature, cur_priority)
         db.session.commit()
@@ -52,9 +53,9 @@ def delete_feature_request(delete_feature):
 
 def update_peer_priority(query, updated_feature, cur_priority):
     """determine feature being updated rank got demoted"""
-    if cur_priority < int(updated_feature.priority_id):
+    if cur_priority < updated_feature.priority_id:
         promote_peer_priority(query, updated_feature, cur_priority)  # promote peers
-    elif cur_priority > int(updated_feature.priority_id):
+    elif cur_priority > updated_feature.priority_id:
         demote_peer_priority(query, updated_feature, cur_priority)  # demote peers
 
 
