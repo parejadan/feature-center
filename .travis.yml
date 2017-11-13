@@ -15,7 +15,7 @@ before_script:
     - PASSWORD=$(jq -r '.password' config.json)  # extract env
     - psql -c "CREATE ROLE $USER WITH PASSWORD '$PASSWORD';" -U postgres
     - psql -c "CREATE DATABASE $DB WITH OWNER=$USER;" -U postgres
-    - psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB TO $USER;"  
+    - psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB TO $USER;" -U postgres
 install:
     - pip3 install -r requirements.txt
 script:
