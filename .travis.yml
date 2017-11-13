@@ -13,14 +13,14 @@ before_script:
     - DB=$(jq -r '.db' config.json)  # extract database from environment config
     - USER=$(jq -r '.user' config.json | tr -d '"')  # extract env user
     - PASSWORD=$(jq -r '.password' config.json)  # extract env
-    - psql -c "CREATE ROLE $USER WITH PASSWORD '$PASSWORD' LOGIN;" -U postgres
-    - psql -c "CREATE DATABASE $DB WITH OWNER=$USER;" -U postgres
-    - psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB TO $USER;" -U postgres
+    - psql -c "CREATE ROLE $USER WITH PASSWORD '$PASSWORD' LOGIN;" -U postgres  # create user with password and login access
+    - psql -c "CREATE DATABASE $DB WITH OWNER=$USER;" -U postgres  # create test database 
+    - psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB TO $USER;" -U postgres  # grant permissions for database buildup/teardown
 install:
     - pip3 install -r requirements.txt
 script:
     - python3 initdb.py  # initialize database setup
-    - python3 py.test
+    - py.test  # run regression/test scripts
 after_success:
     - # deploy application to remote server
     - # launch application in remote server
