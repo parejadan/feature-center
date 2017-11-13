@@ -13,7 +13,7 @@ before_script:
     - DB=$(jq -r '.db' config.json)  # extract database from environment config
     - USER=$(jq -r '.user' config.json | tr -d '"')  # extract env user
     - PASSWORD=$(jq -r '.password' config.json)  # extract env
-    - psql -c "CREATE ROLE $USER WITH PASSWORD '$PASSWORD';" -U postgres
+    - psql -c "CREATE ROLE $USER WITH PASSWORD '$PASSWORD' LOGIN;" -U postgres
     - psql -c "CREATE DATABASE $DB WITH OWNER=$USER;" -U postgres
     - psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB TO $USER;" -U postgres
 install:
