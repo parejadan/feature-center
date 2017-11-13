@@ -4,13 +4,13 @@ from feature.model.logic import to_json_dump
 
 class Transaction:
     def __init__(self):
-        self.INSERT = 0
-        self.UPDATE = 1
-        self.DELETE = 2
+        self.INSERT = 'insert'
+        self.UPDATE = 'update'
+        self.DELETE = 'delete'
 
         # map transaction types to actual transaction to commit
         # only accessible via commit
-        self._trans = {
+        self._actions = {
             self.INSERT: self._insert,
             self.UPDATE: self._update,
             self.DELETE: self._delete
@@ -18,7 +18,7 @@ class Transaction:
 
     def commit(self, query, t_type):
         try:
-            self._trans[t_type](query)
+            self._actions[t_type](query)
             db.session.commit()
             return True
         except Exception as ex:
