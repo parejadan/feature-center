@@ -18,7 +18,7 @@ before_script:
     - # psql -c "ALTER ROLE $USER CREATEDB;"  -U postgres  # add default permissions for app user
     - psql -c "GRANT ALL PRIVILEGES ON DATABASE $DB TO $USER;"  
 install:
-    - pip3 install r requirements.txt
+    - pip3 install -r requirements.txt
 script:
     - python3 initdb.py  # initialize database setup
     - python3 py.test
