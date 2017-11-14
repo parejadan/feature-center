@@ -11,6 +11,7 @@ Setup Guide for Localhost
 -----------
 - developed using Python3+
 - Smoke tested with: Windows Subsystem Linix, Linux
+- A TLDR version of this setup (excluding execution of runserver.py), is compressed in the `.travis.yml` file
 - __Installing Python Dependencies__
   1. `sudo apt-get install python3-pip` # get package manager
   2. `sudo pip3 install virtualenv` # for making sure python setup is clean
